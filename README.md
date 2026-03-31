@@ -1,229 +1,251 @@
 [![codecov](https://codecov.io/gh/Persfone/TrabajoTarjetaDanaCejas/graph/badge.svg?token=BQQHG2VQLD)](https://codecov.io/gh/Persfone/TrabajoTarjetaDanaCejas)
 
-## Mesa Diciembre (3/12)
+# 🚍 Tarjeta SUBE Simulation System
 
-Para el examen de diciembre se les solicita realizar las siguientes tareas.<br>
-Respecto al examen, este va a ser teorico y tambien habra una defensa oral de los nuevos requerimientos del TP.
+Sistema de simulación del transporte urbano de pasajeros de Rosario basado en el funcionamiento de la tarjeta SUBE.
 
-### Consideraciones importantes
-Quienes no hayan completado la implementación de las iteraciones anteriores deberán hacerlo.<br>
-En caso de tener problemas en sus clases y que estos les dificulten la implementación de las nuevas tareas o el testing, están habilitados para modificarlas como crean conveniente, siempre teniendo en cuenta las correcciones que se les enviaron via mail.<br>
-Respecto a los tests de sus respectivos proyectos, vamos a obviarlos ya que seria un trabajo muy extenso corregirlos todos.<br>
-Cara alumno va a hacer un fork del repositorio de su proyecto (si ustedes son los propietarios del repositorio no seria necesario hacer esto, pueden continuar en su repositorio).<br>
-Los requisitos planteados mas adelante deberán desarrollarlos individualmente.<br>
-En caso de necesitar clases de consulta las vamos a coordinar via mail (mgonzales@ips.edu.ar). Tambien pueden consultar lo que necesiten por esten medio.
+El proyecto modela el comportamiento real del sistema de transporte mediante **Programación Orientada a Objetos, testing automatizado y cobertura de código**, incluyendo franquicias, transbordos, saldo negativo, bicicletas públicas y lógica de tarifas.
 
-### Transbordo 
-Ahora todas las tarjetas pueden realizar transbordos independientemente de su beneficio, respetando las restricciones horarias planteadas previamente en la iteración 4.
+---
 
-### Mi Bici Tu Bici
-Implementar el sistema de "mi bici tu bici". Cuando un usuario va a retirar una bici de la estación de bicicletas, debe pagar la tarifa de servicio con su tarjeta SUBE. Si el pago es procesado correctamente, entonces podrá retirar una bicicleta, sino la estación rechazara el pago y no le permitirá retirar la misma. Se les pide:
-- Crear la clase que representara a la estacion de bicicletas y los métodos que consideren necesarios para cumplir con los requerimientos.
-- Cualquier tarjeta puede abonar el servicio.
-- La tarifa es de 1777,50 por dia.
-- El tiempo máximo de uso de una bici es de 1 hora. Por lo tanto si el uso de la misma excede el tiempo limite se le aplicara una multa de 1000 pesos a la hora de pagar. Esta multa se acumula si la persona uso la bici mas tiempo del estipulado varias veces el mismo dia.
-- No existen descuentos por franquicia para este sistema. 
+# 🧠 Descripción
 
-### Nuevos Tests
-Para los tests se les pide hacer tests de integración, uno para las nuevas funcionalidades del sistema de Mi Bici Tu Bici y para el método PagarCon del Colectivo cuando se quiere pagar con una Tarjeta Medio Boleto.
+Este proyecto implementa un sistema completo de pago de transporte público que simula el funcionamiento de la tarjeta SUBE.
 
-El objetivo de estos tests es simular y validar el comportamiento del código que implementaron.<br>
-Los casos que deberían probar son: 
-### Test Mi Bici Tu Bici
-- Se paga la tarifa y se retira una bici exitosamente. Verificando que la tarifa cobrada sea la correcta, sin demora en la devolución y con el saldo suficiente en la tarjeta. 
-- No se puede retirar la bici. Validando que esto suceda cuando no hay suficiente saldo en la tarjeta teniendo o no una multa pendiente de pagar.
-- Se retira una bici con una o varias multas acumuladas. 
+El sistema permite:
 
-### Test PagarCon MedioBoleto
-- Se pueden pagar dos boletos a mitad de precio. Verificando que el tiempo correspondiente paso entre uno y otro, que hay saldo suficiente y que el saldo negativo también permite pagar medio boleto.
-- Se pagan dos boletos a mitad de precio y el tercero a precio normal. Los mismo que el anterior.
-- Verificar que la misma pueda viajar con transbordo si se cumplen los requisitos. El transbordo tiene mas peso que el medio boleto por lo que si tiene viajes a mitad de previo disponibles pero se cumplen los requisitos del transbordo debería viajar gratis en lugar de pagar. Para este caso deberían testear los casos en los que se puede viajar y en los que no con transbordo.
+* pagar viajes en colectivo
+* aplicar franquicias
+* gestionar saldo
+* manejar transbordos
+* controlar horarios
+* aplicar descuentos por uso frecuente
+* integrar el sistema de bicicletas públicas
+* validar el comportamiento mediante tests automatizados
 
+El objetivo es demostrar **modelado de dominio, arquitectura orientada a objetos, testing y buenas prácticas de desarrollo**.
 
+---
 
-# Trabajo Tarjeta 2025
-El siguiente trabajo es un enunciado iterativo. Regularmente se ampliará y/o modificará el enunciado.
+# 🏗️ Arquitectura del Sistema
 
-[ENTREGA](https://forms.gle/qAe7JqK6GKBvNcYU7)
-<br>
+El sistema está basado en **Programación Orientada a Objetos** y modela entidades reales del transporte público.
 
-## Aclaraciones:
+### Entidades principales
 
-- **Todos** los métodos deben estar testeados con un test unitario, aunque no se aclare explícitamente en el enunciado.
-- Dentro de las posibilidades, utilizar NUnit como framework de testing.
-- Para la nota final se tomará en cuenta no solo el código fuente de la implementación, sino también el uso de Git y las herramientas que este provee como commits, ramas y tags.
-- Cada clase de la implementación y de testing debe estar en un archivo aparte.
+* Tarjeta
+* Colectivo
+* Boleto
+* MedioBoleto
+* FranquiciaCompleta
+* BoletoEducativo
+* LineaInterurbana
+* EstacionBicicletas
+* Sistema de Transbordo
 
-## Iteración 1
+Cada entidad representa una parte del sistema real.
 
-Escribir un programa con programación orientada a objetos que permita ilustrar el funcionamiento del transporte urbano de pasajeros de la ciudad de Rosario.
-Las clases que interactúan en la simulación son: Colectivo, Tarjeta y Boleto.
-Cuando un usuario viaja en colectivo con una tarjeta, obtiene un boleto como resultado de la operación `colectivo.pagarCon(tarjeta)`.
+---
 
-<br>
+# 🚀 Funcionalidades
 
-Para esta iteración se consideran los siguientes supuestos:
+## 💳 Sistema de Tarjetas
 
-- No hay medio boleto de ningún tipo.
-- No hay transbordos.
-- No hay saldo negativo.
-- La tarifa básica de un pasaje es de: $1580
-- Las cargas aceptadas de tarjetas son: (2000, 3000, 4000, 5000, 8000, 10000, 15000, 20000, 25000, 30000)
-- El límite de saldo de una tarjeta es de $40000
+* Carga de saldo
+* Saldo máximo
+* Saldo negativo permitido
+* Acreditación automática
+* Control de saldo pendiente
 
-<br>
+---
 
-Se pide:
+## 🎟️ Pago de Boletos
 
-- Hacer un fork del repositorio.
-- Implementar el código de las clases Tarjeta, Colectivo y Boleto.
-- Hacer que el test Tarjeta.cs funcione correctamente con todos los montos de pago listados.
-- Enviar el enlace del repositorio al mail del profesor con los integrantes del grupo: dos por grupo.
+* Pago con tarjeta
+* Generación de boleto
+* Registro de fecha
+* Línea de colectivo
+* Saldo restante
+* Tipo de tarjeta
+* Total abonado
 
-## Iteración 2
+---
 
-Para esta iteración hay 3 tareas principales. Crear un issue en GitHub copiando la descripción de cada tarea y completar cada uno en una rama diferente. Éstas serán mergeadas al validar, luego de una revisión cruzada (de ambos integrantes del grupo), que todo el código tiene sentido y está correctamente implementado.
+## 🎓 Franquicias
 
-No es necesario que todo el código para un issue esté funcionando al 100% antes de mergearlo, pueden crear pull requests que solucionen algún ítem particular del problema para avanzar más rápido.
+### Medio Boleto
 
-Además de las tareas planteadas, cada grupo tiene tareas pendientes de la iteración anterior que debe finalizar antes de comenzar con la iteración 2. Cuando la iteración 1 esté completada, crear un [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) llamado `iteracion1` y subirlo a GitHub.
+* 50% de descuento
+* máximo 2 viajes por día
+* mínimo 5 minutos entre viajes
+* tercer viaje tarifa normal
 
-<br>
+### Franquicia Completa
 
-### Cobertura de código
+* viajes gratuitos
+* límite de viajes diarios
+* control de horario
 
-Implementar GitHub Actions en el repositorio, la [cobertura de código](https://about.codecov.io/) y también el badge.
+### Boleto Educativo
 
-<br>
+* 2 viajes gratis por día
+* luego tarifa normal
 
-### Descuento de saldos
+---
 
-Cada vez que una tarjeta paga un boleto, descuenta el valor del monto gastado.
+# ⏰ Control de Horarios
 
-- Si la tarjeta se queda sin saldo, la operación `colectivo.pagarCon(tarjeta)` devuelve `false`.
+Las franquicias funcionan:
 
-<br>
+Lunes a viernes
+6:00 a 22:00
 
-### Saldo negativo
+Fuera de ese horario no se pueden usar.
 
-- Si la tarjeta se queda sin crédito, puede tener un saldo negativo de hasta $1200.
-- Cuando se vuelve a cargar la tarjeta, se descuenta el saldo de lo que se haya consumido.
-- Escribir un test que valide que la tarjeta no pueda quedar con menos saldo que el permitido.
-- Escribir un test que valide que el saldo de la tarjeta descuenta correctamente el/los viaje/s plus otorgado/s.
+---
 
-<br>
+# 🔁 Transbordos
 
-### Franquicia de Boleto
+* viajes gratis entre líneas distintas
+* dentro de 1 hora
+* lunes a sábado
+* 7:00 a 22:00
+* todas las tarjetas pueden usarlo
 
-Existen dos tipos de franquicia en lo que refiere a tarjetas, las franquicias parciales, como el medio boleto estudiantil o el universitario, y las completas como las de jubilados (Notar que también existe boleto gratuito para estudiantes).
+---
 
-- Implementar cada tipo de tarjeta como una Herencia de la tarjeta original (Medio boleto estudiantil, Boleto gratuito estudiantil, Franquicia completa).
-- Para esta iteración considerar simplemente que cuando se paga con una tarjeta del tipo MedioBoleto el costo del pasaje vale la mitad, independientemente de cuántas veces se use y qué día de la semana sea.
-- Escribir un test que valide que una tarjeta de FranquiciaCompleta siempre puede pagar un boleto.
-- Escribir un test que valide que el monto del boleto pagado con medio boleto es siempre la mitad del normal.
+# 📊 Boleto de Uso Frecuente
 
-## Iteración 3
+Sistema automático de descuentos:
 
-Al igual que la iteración anterior, se pide mantener la mecánica de trabajo para ir añadiendo las nuevas funcionalidades y/o modificaciones (issue, una rama específica para cada tarea y finalmente el merge cuando todo funcione correctamente..., etc.)
+| Viajes  | Descuento |
+| ------- | --------- |
+| 1 a 29  | normal    |
+| 30 a 59 | 20%       |
+| 60 a 80 | 25%       |
+| 81+     | normal    |
 
-En esta iteración daremos una introducción a la manipulación de fechas y horarios. Éstos serán necesarios en esta oportunidad para realizar las modificaciones pedidas.
+---
 
-<br>
+# 🚲 Mi Bici Tu Bici
 
-**NOTA IMPORTANTE:** Para el manejo del tiempo al pagar un boleto tienen [este ejemplo](https://github.com/mgonzalesips/ManejoDeTiempos) de cómo lo pueden hacer. Entiendo que el ejemplo puede no ser claro, lo veremos más a detalle la próxima clase.
+Sistema de bicicletas públicas integrado.
 
-### Más datos sobre el boleto
+### Funcionalidades
 
-La clase boleto tendrá nuevos métodos que permitan conocer: Fecha, tipo de tarjeta, línea de colectivo, total abonado, saldo e ID de la tarjeta. El boleto deberá indicar además el saldo restante en la tarjeta.
+* pago con tarjeta SUBE
+* tarifa diaria
+* retiro de bicicleta
+* control de tiempo
+* multas por demora
+* acumulación de multas
 
-Además, el boleto deberá informar el monto total abonado en caso de que la tarjeta tuviera saldo negativo y eso produzca un valor final superior al valor normal de la tarifa.
+---
 
-Escribir los tests correspondientes a los posibles tipos de boletos a obtener según el tipo de tarjeta.
+# 🧪 Testing
 
-<br>
+El proyecto incluye:
 
-### Limitación en el pago de medio boletos
+* tests unitarios
+* tests de integración
+* cobertura de código
+* validación de reglas del sistema
 
-Para evitar el uso de una tarjeta de tipo medio boleto en más de una persona en el mismo viaje se pide que:
+### Casos testeados
 
-- Al utilizar una tarjeta de tipo medio boleto para viajar, deben pasar como mínimo 5 minutos antes de realizar otro viaje. No será posible pagar otro viaje antes de que pasen estos 5 minutos.
-- Escribir un test que verifique efectivamente que no se deje marcar nuevamente al intentar realizar otro viaje en un intervalo menor a 5 minutos con la misma tarjeta medio boleto. Para el caso del medio boleto, se pueden realizar hasta dos viajes por día. El tercer viaje ya posee su valor normal.
-- Escribir un test que verifique que no se puedan realizar más de dos viajes por día con medio boleto.
+* pago de boletos
+* saldo negativo
+* medio boleto
+* franquicias
+* transbordos
+* bicicletas
+* acreditación de saldo
 
-<br>
+---
 
-### Limitación en el pago de franquicias completas
+# 📈 Cobertura de Código
 
-Para evitar el uso de una tarjeta de tipo boleto educativo gratuito en más de una persona en el mismo viaje se pide que:
+El proyecto utiliza:
 
-- Al utilizar una tarjeta de tipo boleto educativo gratuito se pueden realizar hasta dos viajes gratis por día.
-- Escribir un test que verifique que no se puedan realizar más de dos viajes gratuitos por día.
-- Escribir un test que verifique que los viajes posteriores al segundo se cobran con el precio completo.
+* NUnit
+* GitHub Actions
+* Codecov
 
-<br>
+Badge de cobertura incluido en el repositorio.
 
-### Saldo de la tarjeta
+---
 
-Una tarjeta SUBE no puede almacenar más de 56000 pesos. Por lo tanto, cuando se realiza una carga que haga que se supere este límite, se deberá acreditar la carga en la tarjeta hasta alcanzar el monto máximo permitido y el monto restante se deberá dejar pendiente de acreditación. Luego ese saldo pendiente se acredita a medida que se usa la tarjeta.
+# 🛠️ Tecnologías
 
-- Crear el método `AcreditarCarga`.
-- Modificar la función para cargar la tarjeta añadiendo esta funcionalidad.
-- Escribir un test que valide que si a una tarjeta se le carga un monto que supere el máximo permitido, se acredite el saldo hasta alcanzar el máximo (56000) y que el excedente quede almacenado y pendiente de acreditación.
-- Escribir un test que valide que luego de realizar un viaje, verifique si hay saldo pendiente de acreditación y recargue la tarjeta hasta llegar al máximo nuevamente.
+* C#
+* .NET
+* NUnit
+* GitHub Actions
+* Codecov
+* Programación Orientada a Objetos
+* Testing automatizado
 
-## Iteración 4
+---
 
-### Boleto de uso frecuente
+# 🧩 Conceptos Aplicados
 
-Las tarjetas SUBE cuentan con el boleto de uso frecuente. Este es un beneficio que aplica un descuento al monto del boleto dependiendo de cuántos viajes se hagan.
+* OOP
+* Herencia
+* Polimorfismo
+* Encapsulamiento
+* Testing
+* Clean Code
+* Domain Modeling
+* Git Workflow
+* Coverage
+* Integración continua
 
-- Del viaje 1 al 29: Tarifa normal.
-- Del viaje 30 al 59: 20% de descuento.
-- Del viaje 60 al 80: 25% de descuento.
-- Del viaje 81 en adelante: Tarifa normal.
+---
 
-<br>
+# ▶️ Cómo ejecutar
 
-La cantidad de viajes se cuenta del primer al último día de cada mes. Este beneficio se aplicará *sólo* sobre las tarjetas normales.
+### Clonar repositorio
 
-- Implementar esta nueva funcionalidad.
-- Escribir los tests correspondientes para validar el correcto funcionamiento del código.
+```bash
+git clone https://github.com/Persfone/TarjetaSube
+```
 
-### Franquicias
+### Abrir en Visual Studio
 
-Todas las franquicias (medio boleto estudiantil, jubilado, medio boleto universitario y boleto educativo gratuito) solo pueden utilizarse en una determinada franja horaria:
+Abrir la solución
 
-- Lunes a viernes de 6 a 22.
+```
+TarjetaSube.sln
+```
 
-Fuera de este intervalo de tiempo no es posible pagar con ninguna de estas franquicias.
+### Ejecutar tests
 
-- Escribir tests que validen que no se puedan realizar viajes fuera de la franja horaria y/o días correspondientes.
+```
+dotnet test
+```
 
-### Líneas interurbanas
+---
 
-En nuestra ciudad existen diversas líneas de colectivo. Algunas solo viajan dentro de la ciudad pero otras van hacia la zona metropolitana de Rosario (ej: Gálvez, Baigorria). Estas líneas tienen otra tarifa.
+# 📌 Objetivo del Proyecto
 
-- Implementar las líneas de colectivo interurbanas.
-- La tarifa interurbana es de: $3000.
+Demostrar habilidades en:
 
-Las líneas de colectivo interurbanas admiten todas las franquicias y siguen los mismos criterios que las líneas de colectivo urbanas.
+* diseño de sistemas
+* programación orientada a objetos
+* testing
+* modelado de dominio
+* lógica de negocio
+* uso de Git
+* arquitectura de software
 
-### Trasbordos
+---
 
-Un usuario de la tarjeta SUBE puede realizar trasbordos entre colectivos sin costo de acuerdo a las siguientes condiciones:
+# 👩‍💻 Autor
 
-- El usuario puede realizar trasbordos sin límite en un plazo de 1 hora desde que se pagó el primer boleto, pero el trasbordo debe ser entre líneas distintas.
-- Los trasbordos se pueden realizar de lunes a sábado de 7:00 a 22:00.
-- Todas las tarjetas pueden realizar trasbordos.
-- Cuando se paga un trasbordo se indica también en el boleto.
+Persfone
+Técnica Informática – UNR
 
-## Fecha de Entrega (Tentativa): Viernes 31/10
-
-Para la entrega se pide y se va a considerar:
-
-- Todas las iteraciones completas.
-- Un mínimo de 85% de cobertura de código.
-- El correcto funcionamiento del código.
-- Uso de Git.
+GitHub
+https://github.com/Persfone
 
 
